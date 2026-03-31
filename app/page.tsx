@@ -359,6 +359,16 @@ export default function TeenClubQuiz() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [animatedScore, setAnimatedScore] = useState(0);
 
+  // Preload PDF for current + next question so the cache is warm before modal opens
+  useEffect(() => {
+    if (screen !== 'quiz') return;
+    const ids = [
+      questions[game.currentQuestion]?.knowledgeCard.pdfId,
+      questions[game.currentQuestion + 1]?.knowledgeCard.pdfId,
+    ].filter(Boolean) as string[];
+    ids.forEach((id) => fetch(`/api/pdf/${id}`, { priority: 'low' } as RequestInit));
+  }, [screen, game.currentQuestion]);
+
   // Calculate score with streak bonus
   const calculatePoints = useCallback((streak: number) => {
     if (streak >= 5) return 200;

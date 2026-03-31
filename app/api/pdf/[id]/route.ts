@@ -11,7 +11,7 @@ export async function GET(
 
   const upstream = await fetch(
     `https://drive.usercontent.google.com/download?id=${id}&export=view`,
-    { headers: { 'User-Agent': 'Mozilla/5.0' } }
+    { headers: { 'User-Agent': 'Mozilla/5.0' }, next: { revalidate: 86400 } }
   )
 
   if (!upstream.ok) {

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import { questions, categoryInfo, satisfactionQuestions, educationLevels } from '@/lib/questions';
 import { submitQuizResponse, submitSatisfactionResponse } from '@/lib/googleSheets';
+import { playClick, playCorrect, playWrong, playCombo, playGameStart, playResultFanfare, startBgm, stopBgm } from '@/lib/sounds';
 
 const KnowledgePdf = dynamic(() => import('@/components/KnowledgePdf'), { ssr: false, loading: () => null });
 
@@ -358,6 +359,7 @@ export default function TeenClubQuiz() {
   const [lastPoints, setLastPoints] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [animatedScore, setAnimatedScore] = useState(0);
+  const [bgmOn, setBgmOn] = useState(false);
 
   // Preload PDF for current + next question so the cache is warm before modal opens
   useEffect(() => {
@@ -385,6 +387,12 @@ export default function TeenClubQuiz() {
     const isCorrect = answerIndex === question.correctIndex;
     const newStreak = isCorrect ? game.streak + 1 : 0;
     const points = isCorrect ? calculatePoints(newStreak) : 0;
+
+    if (isCorrect) {
+      if (newStreak >= 3) playCombo(); else playCorrect();
+    } else {
+      playWrong();
+    }
 
     setGame((prev) => ({
       ...prev,
@@ -419,6 +427,7 @@ export default function TeenClubQuiz() {
   // Move to next question
   const nextQuestion = () => {
     if (game.currentQuestion >= questions.length - 1) {
+      stopBgm(); setBgmOn(false); playResultFanfare();
       const finalAnswers = game.answers.map((a) => a ?? -1);
       const finalScore = game.answers.filter((a, i) => a === questions[i].correctIndex).length;
       submitQuizResponse({
@@ -724,7 +733,7 @@ export default function TeenClubQuiz() {
           <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-lg border-t border-white/50 z-30">
             <div className="max-w-sm mx-auto">
               <button
-                onClick={() => setScreen('quiz')}
+                onClick={() => { playGameStart(); startBgm(); setBgmOn(true); setScreen('quiz'); }}
                 disabled={!player.gender || !player.ageGroup || !player.education}
                 className={`w-full py-4 rounded-2xl font-black text-lg transition-all ${
                   player.gender && player.ageGroup && player.education
@@ -765,9 +774,16 @@ export default function TeenClubQuiz() {
                   />
                 </div>
               </div>
-              <div className="flex items-center gap-1 font-bold text-base sm:text-lg">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => { if (bgmOn) { stopBgm(); setBgmOn(false); } else { startBgm(); setBgmOn(true); } }}
+                  className="text-lg opacity-70 hover:opacity-100 transition-opacity"
+                  title={bgmOn ? 'ปิดเพลง' : 'เปิดเพลง'}
+                >
+                  {bgmOn ? '🔊' : '🔇'}
+                </button>
                 <span className={game.streak >= 2 ? 'animate-fire' : ''}>🔥</span>
-                <span>{game.streak}</span>
+                <span className="font-bold text-base sm:text-lg">{game.streak}</span>
               </div>
             </div>
           </div>
@@ -832,7 +848,7 @@ export default function TeenClubQuiz() {
                   return (
                     <button
                       key={i}
-                      onClick={() => handleAnswer(i)}
+                      onClick={() => { playClick(); handleAnswer(i); }}
                       disabled={game.selectedAnswer !== null}
                       className={`w-full p-3 sm:p-4 rounded-2xl text-left flex items-center gap-3 transition-all min-h-[64px] ${buttonClass} ${
                         !showResult ? 'hover:scale-[1.02] active:scale-[0.98]' : ''

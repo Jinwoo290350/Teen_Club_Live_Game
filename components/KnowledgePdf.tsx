@@ -34,17 +34,11 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
     return () => ro.disconnect()
   }, [pdfId])
 
-  // Use height as constraint so the full page fits vertically
-  // Provide width as fallback if height is 0
-  const pageProps =
-    dims.h > 0
-      ? { height: dims.h }
-      : dims.w > 0
-        ? { width: dims.w }
-        : {}
+  // Use width as constraint so PDF fills horizontal space; height scales proportionally
+  const pageProps = dims.w > 0 ? { width: dims.w } : {}
 
   return (
-    <div ref={containerRef} className="w-full h-full flex items-center justify-center bg-gray-100 relative">
+    <div ref={containerRef} className="w-full h-full overflow-y-auto bg-gray-100 relative">
       {loading && !error && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 z-10">
           <div className="w-10 h-10 border-4 border-pink-300 border-t-pink-500 rounded-full animate-spin mb-3" />
@@ -57,7 +51,7 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
           <p className="text-gray-500 text-sm">ไม่สามารถโหลดการ์ดได้</p>
         </div>
       )}
-      {dims.h > 0 && (
+      {dims.w > 0 && (
         <Document
           file={`/api/pdf/${pdfId}`}
           onLoadSuccess={() => setLoading(false)}

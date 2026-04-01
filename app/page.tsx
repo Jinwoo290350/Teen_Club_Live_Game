@@ -796,12 +796,6 @@ export default function TeenClubQuiz() {
                       : ''
                 }`}
               >
-                {/* Section info */}
-                <p className="text-xs text-gray-500 mb-2">
-                  ส่วนที่ {questions[game.currentQuestion].section} •{' '}
-                  {questions[game.currentQuestion].sectionTitle}
-                </p>
-
                 {/* Question number badge */}
                 <div className="flex items-center gap-3 mb-3 sm:mb-4">
                   <span className="w-9 h-9 sm:w-10 sm:h-10 gradient-game rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
@@ -810,7 +804,7 @@ export default function TeenClubQuiz() {
                 </div>
 
                 {/* Question text */}
-                <h3 className="text-base sm:text-lg font-bold text-gray-800 leading-relaxed">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 leading-relaxed">
                   {questions[game.currentQuestion].question}
                 </h3>
               </div>
@@ -840,7 +834,7 @@ export default function TeenClubQuiz() {
                       key={i}
                       onClick={() => handleAnswer(i)}
                       disabled={game.selectedAnswer !== null}
-                      className={`w-full p-3 sm:p-4 rounded-2xl text-left flex items-center gap-3 transition-all min-h-[56px] ${buttonClass} ${
+                      className={`w-full p-3 sm:p-4 rounded-2xl text-left flex items-center gap-3 transition-all min-h-[64px] ${buttonClass} ${
                         !showResult ? 'hover:scale-[1.02] active:scale-[0.98]' : ''
                       } ${isSelected && isCorrectAnswer ? 'animate-pop' : ''}`}
                     >
@@ -859,7 +853,7 @@ export default function TeenClubQuiz() {
                             ? '✗'
                             : letters[i]}
                       </span>
-                      <span className="font-medium text-sm sm:text-base">{choice}</span>
+                      <span className="font-medium text-base sm:text-lg">{choice}</span>
                     </button>
                   );
                 })}
@@ -867,59 +861,40 @@ export default function TeenClubQuiz() {
             </div>
           </div>
 
-          {/* Knowledge Card Modal */}
+          {/* Knowledge Card Modal — Full Screen */}
           {game.showingKnowledge && (
-            <div className="fixed inset-0 bg-black/75 z-40 flex flex-col items-center justify-end sm:justify-center p-0 sm:p-4">
-              <div className="w-full max-w-md rounded-t-3xl sm:rounded-3xl animate-slide-up flex flex-col bg-white" style={{ maxHeight: '92dvh' }}>
+            <div className="fixed inset-0 z-40 flex flex-col bg-white animate-slide-up">
 
-                {/* Drag handle */}
-                <div className="shrink-0 flex justify-center pt-3 pb-1">
-                  <div className="w-10 h-1 rounded-full bg-gray-200" />
-                </div>
-
-                {/* Result feedback card */}
-                <div className="shrink-0 px-4 pb-3">
-                  <div className={`rounded-2xl px-4 py-3 flex items-start gap-3 ${game.isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
-                    <span className="text-2xl leading-none mt-0.5">{game.isCorrect ? '🌟' : '💡'}</span>
-                    <div className="min-w-0">
-                      <p className={`font-bold text-sm ${game.isCorrect ? 'text-green-700' : 'text-red-600'}`}>
-                        {game.isCorrect ? 'ถูกต้อง! เก่งมากเลย 🎉' : 'คำตอบที่ถูกต้องคือ'}
+              {/* Result feedback bar */}
+              <div className="shrink-0 px-4 pt-4 pb-3" style={{ paddingTop: 'max(1rem, env(safe-area-inset-top))' }}>
+                <div className={`rounded-2xl px-4 py-3 flex items-start gap-3 ${game.isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                  <span className="text-2xl leading-none mt-0.5">{game.isCorrect ? '🌟' : '💡'}</span>
+                  <div className="min-w-0">
+                    <p className={`font-bold text-base ${game.isCorrect ? 'text-green-700' : 'text-red-600'}`}>
+                      {game.isCorrect ? 'ถูกต้อง! เก่งมากเลย 🎉' : 'คำตอบที่ถูกต้องคือ'}
+                    </p>
+                    {!game.isCorrect && (
+                      <p className="text-gray-700 text-base mt-0.5 leading-snug">
+                        {questions[game.currentQuestion].choices[questions[game.currentQuestion].correctIndex]}
                       </p>
-                      {!game.isCorrect && (
-                        <p className="text-gray-700 text-sm mt-0.5 leading-snug">
-                          {questions[game.currentQuestion].choices[questions[game.currentQuestion].correctIndex]}
-                        </p>
-                      )}
-                    </div>
+                    )}
                   </div>
                 </div>
+              </div>
 
-                {/* Category + label row */}
-                <div className="shrink-0 px-4 pb-2 flex items-center gap-2">
-                  <span
-                    className="text-xs font-bold px-2.5 py-1 rounded-full text-white shrink-0"
-                    style={{ backgroundColor: categoryInfo[questions[game.currentQuestion].category].color }}
-                  >
-                    {categoryInfo[questions[game.currentQuestion].category].icon} หมวด {questions[game.currentQuestion].category}
-                  </span>
-                  <span className="text-xs text-gray-400 truncate">📚 {questions[game.currentQuestion].sectionTitle}</span>
-                  <span className="text-xs text-gray-300 shrink-0 ml-auto">{game.currentQuestion + 1}/{questions.length}</span>
-                </div>
+              {/* PDF — fills all remaining space */}
+              <div className="flex-1 min-h-0 overflow-hidden">
+                <KnowledgePdf pdfId={questions[game.currentQuestion].knowledgeCard.pdfId} />
+              </div>
 
-                {/* PDF in rounded card */}
-                <div className="flex-1 min-h-0 mx-4 rounded-2xl overflow-hidden shadow-md border border-gray-100" style={{ minHeight: '48dvh' }}>
-                  <KnowledgePdf pdfId={questions[game.currentQuestion].knowledgeCard.pdfId} />
-                </div>
-
-                {/* Next button */}
-                <div className="shrink-0 p-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
-                  <button
-                    onClick={nextQuestion}
-                    className="w-full gradient-game text-white py-4 rounded-2xl font-bold text-base shadow-lg hover:scale-[1.02] active:scale-[0.97] transition-transform"
-                  >
-                    {game.currentQuestion >= questions.length - 1 ? '🏆 ดูผลคะแนน' : 'เข้าใจแล้ว ข้อถัดไป ▶️'}
-                  </button>
-                </div>
+              {/* Next button */}
+              <div className="shrink-0 p-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+                <button
+                  onClick={nextQuestion}
+                  className="w-full gradient-game text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-[0.97] transition-transform"
+                >
+                  {game.currentQuestion >= questions.length - 1 ? '🏆 ดูผลคะแนน' : 'เข้าใจแล้ว ข้อถัดไป ▶️'}
+                </button>
               </div>
             </div>
           )}

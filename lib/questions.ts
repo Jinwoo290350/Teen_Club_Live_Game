@@ -444,6 +444,7 @@ export const questions: Question[] = [
     choices: [
       'ต้องรับประทานยาต้านไวรัสอย่างสม่ำเสมอ และดูแลสุขภาพอย่างเคร่งครัดไปตลอดชีวิต',
       'ไม่มีผลกระทบ แค่ต้องระวังเรื่องอาหารการกิน และอาการสามารถรักษาหายขาดได้ภายใน 1 ปี',
+      'ไม่มีข้อใดถูก',
     ],
     correctIndex: 0,
     knowledgeCard: { pdfId: '1qhFWH-omOMX_DMacxf5rC3Vp-U1At2D0' },
@@ -458,6 +459,7 @@ export const questions: Question[] = [
     choices: [
       'รัฐบาลมีสวัสดิการจ่ายค่าเลี้ยงดูเด็กให้ทั้งหมด 100% จนโต',
       'มีค่าใช้จ่ายสูงมากตามมา เช่น ค่าฝากครรภ์ ค่าคลอด ค่านม ค่าแพมเพิส',
+      'ถูกทุกข้อ',
     ],
     correctIndex: 1,
     knowledgeCard: { pdfId: '1YZKo4xywcaWFGXyebInYTKSPeIF_k12N' },

@@ -189,7 +189,7 @@ function RatingFace({
           ${getIdleAnimation()} ${getSelectAnimation()} 
           ${selected ? 'ring-4 ring-offset-2' : ''}`}
         style={{
-          background: config.gradient || config.color,
+          background: (config as Record<string, string>).gradient || config.color,
           ['--tw-ring-color' as string]: config.color,
         }}
       >
@@ -431,7 +431,7 @@ export default function TeenClubQuiz() {
   // Move to next question
   const nextQuestion = () => {
     if (game.currentQuestion >= questions.length - 1) {
-      stopBgm(); setBgmOn(false); playResultFanfare();
+      playResultFanfare();
       const finalAnswers = game.answers.map((a) => a ?? -1);
       const finalScore = game.answers.filter((a, i) => a === questions[i].correctIndex).length;
       submitQuizResponse({
@@ -457,6 +457,7 @@ export default function TeenClubQuiz() {
 
   // Reset game
   const resetGame = () => {
+    stopBgm(); setBgmOn(false);
     setScreen('splash');
     setPlayer({ gender: null, ageGroup: null, education: '' });
     setGame({
@@ -606,7 +607,7 @@ export default function TeenClubQuiz() {
 
             {/* Start button */}
             <button
-              onClick={() => setScreen('setup')}
+              onClick={() => { startBgm(); setBgmOn(true); setScreen('setup'); }}
               className="gradient-game text-white text-lg sm:text-xl font-bold w-full max-w-xs py-4 rounded-2xl shadow-xl btn-glow"
             >
               🚀 เริ่มเล่นเกม!
@@ -737,7 +738,7 @@ export default function TeenClubQuiz() {
           <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-lg border-t border-white/50 z-30">
             <div className="max-w-sm mx-auto">
               <button
-                onClick={() => { playGameStart(); startBgm(); setBgmOn(true); setScreen('quiz'); }}
+                onClick={() => { playGameStart(); setScreen('quiz'); }}
                 disabled={!player.gender || !player.ageGroup || !player.education}
                 className={`w-full py-4 rounded-2xl font-black text-lg transition-all ${
                   player.gender && player.ageGroup && player.education

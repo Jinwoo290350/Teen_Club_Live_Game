@@ -310,6 +310,39 @@
   100% { transform: scaleY(1.2) translateY(5px); }
 }
 
+@keyframes flash-correct {
+  0%   { opacity: 0; }
+  15%  { opacity: 0.45; }
+  100% { opacity: 0; }
+}
+@keyframes flash-wrong {
+  0%   { opacity: 0; }
+  15%  { opacity: 0.35; }
+  100% { opacity: 0; }
+}
+@keyframes modal-enter {
+  0%   { opacity: 0; transform: scale(0.88) translateY(24px); }
+  65%  { transform: scale(1.02) translateY(-3px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes badge-enter {
+  0%   { opacity: 0; transform: scale(0.7) translateY(-12px); }
+  60%  { transform: scale(1.06) translateY(2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes glow-correct {
+  0%, 100% { box-shadow: 0 0 10px rgba(74,222,128,0.4), 0 0 20px rgba(74,222,128,0.2); }
+  50%       { box-shadow: 0 0 20px rgba(74,222,128,0.7), 0 0 40px rgba(74,222,128,0.4); }
+}
+@keyframes glow-wrong {
+  0%, 100% { box-shadow: 0 0 10px rgba(251,113,133,0.4); }
+  50%       { box-shadow: 0 0 22px rgba(251,113,133,0.7), 0 0 40px rgba(251,113,133,0.3); }
+}
+@keyframes particle-burst {
+  0%   { opacity: 1; transform: translate(0,0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+}
+
 /* Animation Classes */
 .animate-shake { animation: shake 0.5s ease-in-out; }
 .animate-pop { animation: pop 0.3s ease-out forwards; }
@@ -325,6 +358,12 @@
 .animate-gradient { animation: gradient-shift 3s ease infinite; background-size: 200% 200%; }
 .animate-fire { animation: fire 0.3s ease-in-out infinite; }
 .animate-combo-fly { animation: combo-fly 1.5s ease-out forwards; }
+.animate-modal-enter { animation: modal-enter 0.45s cubic-bezier(0.34, 1.4, 0.64, 1) forwards; }
+.animate-badge-enter { animation: badge-enter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both; }
+.animate-flash-correct { animation: flash-correct 0.7s ease-out forwards; }
+.animate-flash-wrong { animation: flash-wrong 0.7s ease-out forwards; }
+.animate-glow-correct { animation: glow-correct 1.4s ease-in-out infinite; }
+.animate-glow-wrong { animation: glow-wrong 1.2s ease-in-out infinite; }
 
 /* Face animation classes */
 .face-tremble { animation: face-tremble 0.15s linear infinite; }

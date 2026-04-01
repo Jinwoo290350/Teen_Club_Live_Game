@@ -12,7 +12,8 @@ interface KnowledgePdfProps {
 }
 
 export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
-  const [width, setWidth] = useState(0)
+  const [dims, setDims] = useState({ w: 0, h: 0 })
+  const [pageRatio, setPageRatio] = useState<number | null>(null) // height / width
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -20,9 +21,13 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
   useEffect(() => {
     setLoading(true)
     setError(false)
+    setPageRatio(null)
     const update = () => {
       if (!containerRef.current) return
-      setWidth(containerRef.current.clientWidth)
+      setDims({
+        w: containerRef.current.clientWidth,
+        h: containerRef.current.clientHeight,
+      })
     }
     update()
     const ro = new ResizeObserver(update)
@@ -30,10 +35,31 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
     return () => ro.disconnect()
   }, [pdfId])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDocLoad = async (pdf: any) => {
+    try {
+      const page = await pdf.getPage(1)
+      const vp = page.getViewport({ scale: 1 })
+      setPageRatio(vp.height / vp.width)
+    } catch {
+      // fallback: use width constraint
+    }
+    setLoading(false)
+  }
+
+  // Fit the page inside the container using the actual PDF aspect ratio
+  const pageProps = (() => {
+    if (!dims.w) return {}
+    if (!dims.h || pageRatio === null) return { width: dims.w }
+    const heightAtFullWidth = dims.w * pageRatio
+    if (heightAtFullWidth <= dims.h) return { width: dims.w }
+    return { height: dims.h }
+  })()
+
   return (
     <div
       ref={containerRef}
-      className="w-full h-full overflow-y-auto bg-white relative"
+      className="w-full h-full overflow-hidden bg-white flex items-center justify-center relative"
     >
       {loading && !error && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10">
@@ -47,16 +73,16 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
           <p className="text-gray-500 text-sm">ไม่สามารถโหลดการ์ดได้</p>
         </div>
       )}
-      {width > 0 && (
+      {dims.w > 0 && (
         <Document
           file={`/knowledge-cards/${pdfId}.pdf`}
-          onLoadSuccess={() => setLoading(false)}
+          onLoadSuccess={handleDocLoad}
           onLoadError={() => { setLoading(false); setError(true) }}
           loading=""
         >
           <Page
             pageNumber={1}
-            width={width}
+            {...pageProps}
             renderAnnotationLayer={false}
             renderTextLayer={false}
           />

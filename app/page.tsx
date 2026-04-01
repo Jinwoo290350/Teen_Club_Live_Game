@@ -8,6 +8,18 @@ import { playClick, playCorrect, playWrong, playCombo, playGameStart, playResult
 
 const KnowledgePdf = dynamic(() => import('@/components/KnowledgePdf'), { ssr: false, loading: () => null });
 
+// Preload all 26 knowledge card PDFs immediately so they're cached by the time the user needs them
+if (typeof window !== 'undefined') {
+  questions.forEach((q) => {
+    const link = document.createElement('link')
+    link.rel = 'prefetch'
+    link.href = `/knowledge-cards/${q.knowledgeCard.pdfId}.pdf`
+    link.as = 'fetch'
+    link.crossOrigin = 'anonymous'
+    document.head.appendChild(link)
+  })
+}
+
 // Types
 type Screen = 'splash' | 'setup' | 'quiz' | 'results' | 'survey' | 'thanks';
 type Gender = 'male' | 'female' | 'lgbtq' | 'unspecified' | null;
@@ -369,7 +381,7 @@ export default function TeenClubQuiz() {
       questions[game.currentQuestion]?.knowledgeCard.pdfId,
       questions[game.currentQuestion + 1]?.knowledgeCard.pdfId,
     ].filter(Boolean) as string[];
-    ids.forEach((id) => fetch(`/api/pdf/${id}`, { priority: 'low' } as RequestInit));
+    ids.forEach((id) => fetch(`/knowledge-cards/${id}.pdf`, { priority: 'low' } as RequestInit));
   }, [screen, game.currentQuestion]);
 
   // Calculate score with streak bonus
@@ -892,8 +904,8 @@ export default function TeenClubQuiz() {
           {/* Knowledge Card Modal */}
           {game.showingKnowledge && (
             // Mobile: full-screen | Desktop: centered modal with backdrop
-            <div className="fixed inset-0 z-40 flex flex-col sm:items-center sm:justify-center sm:bg-black/60 sm:p-6">
-              <div className="w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-lg sm:rounded-3xl sm:shadow-2xl flex flex-col bg-white overflow-hidden animate-modal-enter">
+            <div className="fixed inset-x-0 bottom-0 top-10 z-40 flex flex-col sm:inset-0 sm:items-center sm:justify-center sm:bg-black/60 sm:p-4">
+              <div className="w-full h-full sm:h-auto sm:max-h-[96vh] sm:max-w-lg sm:rounded-3xl sm:shadow-2xl flex flex-col bg-white overflow-hidden animate-modal-enter rounded-t-3xl shadow-2xl">
 
                 {/* Slim result badge */}
                 <div

@@ -895,7 +895,7 @@ export default function TeenClubQuiz() {
           {game.showingKnowledge && (
             // Mobile: full-screen | Desktop: centered modal with backdrop
             <div className="fixed inset-x-0 bottom-0 top-10 z-40 flex flex-col sm:inset-0 sm:items-center sm:justify-center sm:bg-black/60 sm:p-4">
-              <div className="w-full h-full sm:h-auto sm:max-h-[96vh] sm:max-w-lg sm:rounded-3xl sm:shadow-2xl flex flex-col bg-white overflow-hidden animate-modal-enter rounded-t-3xl shadow-2xl">
+              <div className="w-full h-full sm:h-[92vh] sm:max-w-lg sm:rounded-3xl sm:shadow-2xl flex flex-col bg-white overflow-hidden animate-modal-enter rounded-t-3xl shadow-2xl">
 
                 {/* Slim result badge */}
                 <div

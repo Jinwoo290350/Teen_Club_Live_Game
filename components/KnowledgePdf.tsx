@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { useState } from 'react'
 
 interface KnowledgePdfProps {
@@ -20,13 +19,12 @@ export default function KnowledgeCard({ pdfId }: KnowledgePdfProps) {
   }
 
   return (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src={`/knowledge-cards/${pdfId}.png`}
       alt="การ์ดความรู้"
-      fill
-      className="object-contain"
+      className="w-full h-full object-contain block"
       onError={() => setError(true)}
-      priority
     />
   )
 }

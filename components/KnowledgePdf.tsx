@@ -12,7 +12,7 @@ interface KnowledgePdfProps {
 }
 
 export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
-  const [dims, setDims] = useState({ w: 0, h: 0 })
+  const [width, setWidth] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -22,10 +22,7 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
     setError(false)
     const update = () => {
       if (!containerRef.current) return
-      setDims({
-        w: containerRef.current.clientWidth,
-        h: containerRef.current.clientHeight,
-      })
+      setWidth(containerRef.current.clientWidth)
     }
     update()
     const ro = new ResizeObserver(update)
@@ -33,24 +30,10 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
     return () => ro.disconnect()
   }, [pdfId])
 
-  // Pick the constraint that keeps the PDF within BOTH width and height.
-  // Assume portrait PDF ratio ≈ 1 : 1.41 (A4-ish).
-  const pageProps = (() => {
-    if (!dims.w) return {}
-    if (!dims.h) return { width: dims.w }
-    // If constrained by width, would the height overflow?
-    const heightAtWidth = dims.w * 1.41
-    if (heightAtWidth <= dims.h) {
-      return { width: dims.w }          // fits — use full width
-    }
-    // Otherwise constrain by height; PDF will be narrower than container
-    return { height: dims.h }
-  })()
-
   return (
     <div
       ref={containerRef}
-      className="w-full h-full overflow-hidden bg-white flex items-center justify-center relative"
+      className="w-full h-full overflow-y-auto bg-white relative"
     >
       {loading && !error && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10">
@@ -64,7 +47,7 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
           <p className="text-gray-500 text-sm">ไม่สามารถโหลดการ์ดได้</p>
         </div>
       )}
-      {dims.w > 0 && (
+      {width > 0 && (
         <Document
           file={`/knowledge-cards/${pdfId}.pdf`}
           onLoadSuccess={() => setLoading(false)}
@@ -73,7 +56,7 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
         >
           <Page
             pageNumber={1}
-            {...pageProps}
+            width={width}
             renderAnnotationLayer={false}
             renderTextLayer={false}
           />

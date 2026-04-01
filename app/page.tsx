@@ -893,40 +893,41 @@ export default function TeenClubQuiz() {
           {game.showingKnowledge && (
             // Mobile: full-screen | Desktop: centered modal with backdrop
             <div className="fixed inset-0 z-40 flex flex-col sm:items-center sm:justify-center sm:bg-black/60 sm:p-6">
-              <div className="w-full h-full sm:h-auto sm:max-h-[90vh] sm:max-w-lg sm:rounded-3xl sm:shadow-2xl flex flex-col bg-white overflow-hidden animate-modal-enter">
+              <div className="w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-lg sm:rounded-3xl sm:shadow-2xl flex flex-col bg-white overflow-hidden animate-modal-enter">
 
-                {/* Result badge */}
+                {/* Slim result badge */}
                 <div
-                  className={`shrink-0 mx-4 mt-4 mb-3 rounded-2xl px-4 py-3 flex items-start gap-3 animate-badge-enter ${
+                  className={`shrink-0 flex items-center gap-2 px-4 py-2.5 animate-badge-enter ${
                     game.isCorrect
-                      ? 'bg-green-50 border-2 border-green-300 animate-glow-correct'
-                      : 'bg-red-50 border-2 border-red-300 animate-glow-wrong'
+                      ? 'bg-green-500 animate-glow-correct'
+                      : 'bg-red-500 animate-glow-wrong'
                   }`}
-                  style={{ paddingTop: 'max(0.75rem, calc(env(safe-area-inset-top) + 0.25rem))' } as React.CSSProperties}
+                  style={{ paddingTop: 'max(0.625rem, env(safe-area-inset-top))' } as React.CSSProperties}
                 >
-                  <span className="text-3xl leading-none shrink-0">{game.isCorrect ? '🌟' : '💡'}</span>
-                  <div className="min-w-0">
-                    <p className={`font-bold text-base ${game.isCorrect ? 'text-green-700' : 'text-red-600'}`}>
+                  <span className="text-xl shrink-0">{game.isCorrect ? '🌟' : '💡'}</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-white font-bold text-sm leading-tight">
                       {game.isCorrect ? 'ถูกต้อง! เก่งมากเลย 🎉' : 'คำตอบที่ถูกต้องคือ'}
                     </p>
                     {!game.isCorrect && (
-                      <p className="text-gray-700 text-base mt-1 leading-snug font-medium">
+                      <p className="text-white/90 text-sm leading-tight mt-0.5 truncate">
                         {questions[game.currentQuestion].choices[questions[game.currentQuestion].correctIndex]}
                       </p>
                     )}
                   </div>
+                  <span className="text-white/70 text-xs shrink-0">{game.currentQuestion + 1}/{questions.length}</span>
                 </div>
 
-                {/* PDF */}
-                <div className="flex-1 min-h-0 sm:max-h-[55vh] overflow-hidden mx-0 sm:mx-4 sm:mb-0 sm:rounded-xl">
+                {/* PDF — fills all remaining space, no scroll */}
+                <div className="flex-1 min-h-0 overflow-hidden">
                   <KnowledgePdf pdfId={questions[game.currentQuestion].knowledgeCard.pdfId} />
                 </div>
 
                 {/* Next button */}
-                <div className="shrink-0 p-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+                <div className="shrink-0 px-4 py-3" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
                   <button
                     onClick={nextQuestion}
-                    className="w-full gradient-game text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-[0.97] transition-transform"
+                    className="w-full gradient-game text-white py-3.5 rounded-2xl font-bold text-base shadow-lg hover:scale-[1.02] active:scale-[0.97] transition-transform"
                   >
                     {game.currentQuestion >= questions.length - 1 ? '🏆 ดูผลคะแนน' : 'เข้าใจแล้ว ข้อถัดไป ▶️'}
                   </button>

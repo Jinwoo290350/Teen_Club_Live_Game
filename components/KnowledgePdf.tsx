@@ -1,93 +1,32 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { Document, Page, pdfjs } from 'react-pdf'
-import 'react-pdf/dist/Page/AnnotationLayer.css'
-import 'react-pdf/dist/Page/TextLayer.css'
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
+import Image from 'next/image'
+import { useState } from 'react'
 
 interface KnowledgePdfProps {
   pdfId: string
 }
 
-export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
-  const [dims, setDims] = useState({ w: 0, h: 0 })
-  const [pageRatio, setPageRatio] = useState<number | null>(null) // height / width
-  const [loading, setLoading] = useState(true)
+export default function KnowledgeCard({ pdfId }: KnowledgePdfProps) {
   const [error, setError] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    setLoading(true)
-    setError(false)
-    setPageRatio(null)
-    const update = () => {
-      if (!containerRef.current) return
-      setDims({
-        w: containerRef.current.clientWidth,
-        h: containerRef.current.clientHeight,
-      })
-    }
-    update()
-    const ro = new ResizeObserver(update)
-    if (containerRef.current) ro.observe(containerRef.current)
-    return () => ro.disconnect()
-  }, [pdfId])
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleDocLoad = async (pdf: any) => {
-    try {
-      const page = await pdf.getPage(1)
-      const vp = page.getViewport({ scale: 1 })
-      setPageRatio(vp.height / vp.width)
-    } catch {
-      // fallback: use width constraint
-    }
-    setLoading(false)
+  if (error) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center gap-2 p-4 text-center bg-white">
+        <span className="text-4xl">😕</span>
+        <p className="text-gray-500 text-sm">ไม่สามารถโหลดการ์ดได้</p>
+      </div>
+    )
   }
 
-  // Fit the page inside the container using the actual PDF aspect ratio
-  const pageProps = (() => {
-    if (!dims.w) return {}
-    if (!dims.h || pageRatio === null) return { width: dims.w }
-    const heightAtFullWidth = dims.w * pageRatio
-    if (heightAtFullWidth <= dims.h) return { width: dims.w }
-    return { height: dims.h }
-  })()
-
   return (
-    <div
-      ref={containerRef}
-      className="w-full h-full overflow-hidden bg-white flex items-center justify-center relative"
-    >
-      {loading && !error && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10">
-          <div className="w-10 h-10 border-4 border-pink-300 border-t-pink-500 rounded-full animate-spin mb-3" />
-          <p className="text-gray-400 text-sm">กำลังโหลดการ์ดความรู้…</p>
-        </div>
-      )}
-      {error && (
-        <div className="flex flex-col items-center justify-center gap-2 p-4 text-center">
-          <span className="text-4xl">😕</span>
-          <p className="text-gray-500 text-sm">ไม่สามารถโหลดการ์ดได้</p>
-        </div>
-      )}
-      {dims.w > 0 && (
-        <Document
-          file={`/knowledge-cards/${pdfId}.pdf`}
-          onLoadSuccess={handleDocLoad}
-          onLoadError={() => { setLoading(false); setError(true) }}
-          loading=""
-        >
-          <Page
-            pageNumber={1}
-            {...pageProps}
-            renderAnnotationLayer={false}
-            renderTextLayer={false}
-          />
-        </Document>
-      )}
-    </div>
+    <Image
+      src={`/knowledge-cards/${pdfId}.png`}
+      alt="การ์ดความรู้"
+      fill
+      className="object-contain"
+      onError={() => setError(true)}
+      priority
+    />
   )
 }

@@ -8,14 +8,13 @@ import { playClick, playCorrect, playWrong, playCombo, playGameStart, playResult
 
 const KnowledgePdf = dynamic(() => import('@/components/KnowledgePdf'), { ssr: false, loading: () => null });
 
-// Preload all 26 knowledge card PDFs immediately so they're cached by the time the user needs them
+// Preload all 26 knowledge card images immediately
 if (typeof window !== 'undefined') {
   questions.forEach((q) => {
     const link = document.createElement('link')
     link.rel = 'prefetch'
-    link.href = `/knowledge-cards/${q.knowledgeCard.pdfId}.pdf`
-    link.as = 'fetch'
-    link.crossOrigin = 'anonymous'
+    link.href = `/knowledge-cards/${q.knowledgeCard.pdfId}.png`
+    link.as = 'image'
     document.head.appendChild(link)
   })
 }
@@ -374,15 +373,6 @@ export default function TeenClubQuiz() {
   const [bgmOn, setBgmOn] = useState(false);
   const [answerFlash, setAnswerFlash] = useState<'correct' | 'wrong' | null>(null);
 
-  // Preload PDF for current + next question so the cache is warm before modal opens
-  useEffect(() => {
-    if (screen !== 'quiz') return;
-    const ids = [
-      questions[game.currentQuestion]?.knowledgeCard.pdfId,
-      questions[game.currentQuestion + 1]?.knowledgeCard.pdfId,
-    ].filter(Boolean) as string[];
-    ids.forEach((id) => fetch(`/knowledge-cards/${id}.pdf`, { priority: 'low' } as RequestInit));
-  }, [screen, game.currentQuestion]);
 
   // Calculate score with streak bonus
   const calculatePoints = useCallback((streak: number) => {

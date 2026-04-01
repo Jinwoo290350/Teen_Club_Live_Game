@@ -66,7 +66,7 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
       )}
       {dims.w > 0 && (
         <Document
-          file={`/api/pdf/${pdfId}`}
+          file={`/knowledge-cards/${pdfId}.pdf`}
           onLoadSuccess={() => setLoading(false)}
           onLoadError={() => { setLoading(false); setError(true) }}
           loading=""

@@ -1201,12 +1201,20 @@ export default function TeenClubQuiz() {
               </p>
             </div>
 
-            <button
-              onClick={resetGame}
-              className="gradient-game text-white px-8 py-4 rounded-full font-bold text-base sm:text-lg shadow-xl btn-glow"
-            >
-              เล่นอีกครั้ง
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <a
+                href="https://modnoisarticle.my.canva.site/teen-club-live-dashboard"
+                className="bg-white border-2 border-pink-300 text-pink-500 px-8 py-4 rounded-full font-bold text-base sm:text-lg shadow-lg hover:bg-pink-50 transition-colors text-center"
+              >
+                กลับสู่หน้าหลัก
+              </a>
+              <button
+                onClick={resetGame}
+                className="gradient-game text-white px-8 py-4 rounded-full font-bold text-base sm:text-lg shadow-xl btn-glow"
+              >
+                เล่นอีกครั้ง
+              </button>
+            </div>
 
             <p className="mt-8 text-xs text-gray-400">
               Teen Club Live Dashboard | กรมอนามัย กระทรวงสาธารณสุข

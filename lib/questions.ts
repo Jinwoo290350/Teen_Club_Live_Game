@@ -59,7 +59,7 @@ export const questions: Question[] = [
       'ทุกวิธีมีประสิทธิภาพในการคุมกำเนิดทั้งหมด',
     ],
     correctIndex: 0,
-    knowledgeCard: { pdfId: '1AKhg7V2WhTBxTMeM0ypQp5MnxqILfEtz' },
+    knowledgeCard: { pdfId: 's2q1' },
   },
   {
     id: 's2q2',
@@ -74,7 +74,7 @@ export const questions: Question[] = [
       'มีประสิทธิภาพสูง คุมกำเนิดได้ 3-5 ปี',
     ],
     correctIndex: 2,
-    knowledgeCard: { pdfId: '1sKo6mf-jjUNJ83aoT3nSXBo_h2gTfPgp' },
+    knowledgeCard: { pdfId: 's2q2' },
   },
 
   // ส่วนที่ 3: ความเสี่ยงของการหลั่งนอก
@@ -91,7 +91,7 @@ export const questions: Question[] = [
       'ได้เฉพาะช่วงปลอดภัย (หน้า 7 หลัง 7) เท่านั้น',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '146NyaMUR7kGPjfLnrspgEbMMaXB0ttwi' },
+    knowledgeCard: { pdfId: 's3q1' },
   },
   {
     id: 's3q2',
@@ -106,7 +106,7 @@ export const questions: Question[] = [
       'ถุงยางอนามัยป้องกันการตั้งครรภ์ได้ดีกว่าการหลั่งนอก',
     ],
     correctIndex: 2,
-    knowledgeCard: { pdfId: '1eCcq3i7WJqIQCWQzVUaL2M4NEq2FZEBP' },
+    knowledgeCard: { pdfId: 's3q2' },
   },
 
   // ส่วนที่ 4: ความรู้การใช้ถุงยางอนามัย
@@ -123,7 +123,7 @@ export const questions: Question[] = [
       'ถอดถุงยางอนามัยอย่างระมัดระวัง',
     ],
     correctIndex: 0,
-    knowledgeCard: { pdfId: '1Qax6loqlHVoQW8ORUESVDr73T6KB9VHe' },
+    knowledgeCard: { pdfId: 's4q1' },
   },
   {
     id: 's4q2',
@@ -138,7 +138,7 @@ export const questions: Question[] = [
       'เสี่ยงเฉพาะการตั้งครรภ์ แต่ไม่เสี่ยงต่อการติดเชื้อโรคติดต่อทางเพศสัมพันธ์',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '1aP4Shc_yC4OQF00KNeDhK6s7_XQXn_NB' },
+    knowledgeCard: { pdfId: 's4q2' },
   },
   {
     id: 's4q3',
@@ -153,7 +153,7 @@ export const questions: Question[] = [
       'วัดจากเส้นรอบวงของอัณฑะเพศชาย หารด้วย 2.3 มิลลิเมตร',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '16bOTdQhNC6XCDXmA8yVbMJYofukEgSeb' },
+    knowledgeCard: { pdfId: 's4q3' },
   },
 
   // ส่วนที่ 5: ความเข้าใจการใช้ยาคุมกำเนิดอย่างถูกต้อง
@@ -170,7 +170,7 @@ export const questions: Question[] = [
       'เริ่มวันไหนก็ได้หลังมีประจำเดือน',
     ],
     correctIndex: 0,
-    knowledgeCard: { pdfId: '1kV590IePGpsq7NQqda7uTH8vAl_P2dBW' },
+    knowledgeCard: { pdfId: 's5q1' },
   },
   {
     id: 's5q2',
@@ -185,7 +185,7 @@ export const questions: Question[] = [
       'ทิ้งเม็ดที่ลืมไปเลย แล้วกินเม็ดต่อไปตามเวลาปกติเพียง 1 เม็ด',
     ],
     correctIndex: 0,
-    knowledgeCard: { pdfId: '1v6O68zp2PRIv6iQbYk30LD0MjQBjCzIu' },
+    knowledgeCard: { pdfId: 's5q2' },
   },
   {
     id: 's5q3',
@@ -200,7 +200,7 @@ export const questions: Question[] = [
       'เปลี่ยนไปกินยาวันเว้นวันแทนเพื่อให้ร่างกายค่อยๆ ปรับตัว',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '1qkXwCMs6Eri38Y9fDlXoIjK9FT_rOawC' },
+    knowledgeCard: { pdfId: 's5q3' },
   },
 
   // ส่วนที่ 6: ข้อจำกัดของยาคุมฉุกเฉิน
@@ -217,7 +217,7 @@ export const questions: Question[] = [
       'ควรกินล่วงหน้าก่อนมีเพศสัมพันธ์ 1 วัน',
     ],
     correctIndex: 0,
-    knowledgeCard: { pdfId: '1_YBjgDcG4qiUD38j9jJWLQ9UuqSdqhPN' },
+    knowledgeCard: { pdfId: 's6q1' },
   },
 
   // ─── Category 2: ทักษะการสื่อสารและตัดสินใจ (ส่วน 7–8, 3 ข้อ) ───
@@ -236,7 +236,7 @@ export const questions: Question[] = [
       '"งั้นเดี๋ยวพรุ่งนี้เราไปซื้อยาคุมฉุกเฉินกินเอง เธอทำต่อเถอะ"',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '1BzYVKgrC3EmSlg2oR6z_B6zeBTYQQPf-' },
+    knowledgeCard: { pdfId: 's7q1' },
   },
 
   // ส่วนที่ 8: การตัดสินใจภายใต้แรงกดดัน
@@ -253,7 +253,7 @@ export const questions: Question[] = [
       'หาวิธีการปกปิดร่องรอยเพื่อไม่ให้ผู้ปกครองและครูจับได้',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '1BFGGOIz45-P2gc1MwukPhjsvxAWtKZ3D' },
+    knowledgeCard: { pdfId: 's8q1' },
   },
   {
     id: 's8q2',
@@ -268,7 +268,7 @@ export const questions: Question[] = [
       'ต่อว่าแฟนที่ชวนไปในสถานการณ์เสี่ยง',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '1IA2wH991Azq6XMahTjkGM9Cw-694O7jQ' },
+    knowledgeCard: { pdfId: 's8q2' },
   },
 
   // ─── Category 3: ความรู้ทั่วไปด้านสุขภาพทางเพศ (ส่วน 9–16, 15 ข้อ) ───
@@ -287,7 +287,7 @@ export const questions: Question[] = [
       'ได้ วัยรุ่นมีสิทธิตามกฎหมายในการเข้ารับบริการด้วยตนเองอย่างเป็นความลับ',
     ],
     correctIndex: 2,
-    knowledgeCard: { pdfId: '1edccNeskZbDDEV43dox1oL6ciZLqNOPr' },
+    knowledgeCard: { pdfId: 's9q1' },
   },
 
   // ส่วนที่ 10: ความพร้อมในการขอความช่วยเหลือ
@@ -300,7 +300,7 @@ export const questions: Question[] = [
     question: 'เบอร์สายด่วนใด ให้บริการปรึกษาเรื่องเอดส์ และท้องไม่พร้อม',
     choices: ['1323', '1663', '1556'],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '1Qm_7ZUihdZkGv5x5Zq--ON6abLVRatsf' },
+    knowledgeCard: { pdfId: 's10q1' },
   },
   {
     id: 's10q2',
@@ -315,7 +315,7 @@ export const questions: Question[] = [
       'ปล่อยให้ร่างกายสร้างภูมิคุ้มกันเพื่อรักษาตัวเอง',
     ],
     correctIndex: 0,
-    knowledgeCard: { pdfId: '1HiJ-Xk7SlwwaY8dYmPKXd2FtZxOKfX0s' },
+    knowledgeCard: { pdfId: 's10q2' },
   },
 
   // ส่วนที่ 11: ความเข้าใจต่อความเชื่อผิด ๆ
@@ -332,7 +332,7 @@ export const questions: Question[] = [
       'การมีเพศสัมพันธ์ครั้งแรก หากไม่ป้องกันก็มีโอกาสตั้งครรภ์และติดโรคได้เท่ากับครั้งอื่นๆ',
     ],
     correctIndex: 2,
-    knowledgeCard: { pdfId: '12WxBWp0qgl_pW-hsSeF1w-EGr-dJa6Xb' },
+    knowledgeCard: { pdfId: 's11q1' },
   },
 
   // ส่วนที่ 12: การคัดกรองข้อมูล
@@ -349,7 +349,7 @@ export const questions: Question[] = [
       'เว็บไซต์มีแหล่งที่มาเชื่อถือได้',
     ],
     correctIndex: 2,
-    knowledgeCard: { pdfId: '1iNw1riGPQajRxvGjmvFZWtn1lVqGJM4A' },
+    knowledgeCard: { pdfId: 's12q1' },
   },
   {
     id: 's12q2',
@@ -364,7 +364,7 @@ export const questions: Question[] = [
       'น่าลองซื้อมาใช้ควบคู่กับการกินยาคุม เพื่อความปลอดภัยสองชั้น',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '1TPIf0PCkau9TFt5wZFLtsDbOQ7L1uk-t' },
+    knowledgeCard: { pdfId: 's12q2' },
   },
 
   // ส่วนที่ 13: ความเข้าใจการป้องกันโรคติดต่อทางเพศสัมพันธ์
@@ -381,7 +381,7 @@ export const questions: Question[] = [
       'ไม่มีความเสี่ยงอะไรเลย เพราะไม่ทำให้เกิดการตั้งครรภ์',
     ],
     correctIndex: 0,
-    knowledgeCard: { pdfId: '1NjeLy5VGB2ZRkTI9A6Jv9r7vfBWefLgK' },
+    knowledgeCard: { pdfId: 's13q1' },
   },
   {
     id: 's13q2',
@@ -396,7 +396,7 @@ export const questions: Question[] = [
       'ไม่แน่ใจ',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '1HwK01IT29sa7KFrhA90DH0_w5O64TTXf' },
+    knowledgeCard: { pdfId: 's13q2' },
   },
 
   // ส่วนที่ 14: การคิดเชิงป้องกัน
@@ -413,7 +413,7 @@ export const questions: Question[] = [
       'ทั้งคู่ยินยอมพร้อมใจ มีสติเต็มที่ พูดคุยตกลงเรื่องการคุมกำเนิดและมีความรับผิดชอบร่วมกัน',
     ],
     correctIndex: 2,
-    knowledgeCard: { pdfId: '1ho-VA4Y0GF6fXGrIO1iWteqS71PI_BkA' },
+    knowledgeCard: { pdfId: 's14q1' },
   },
 
   // ส่วนที่ 15: ผลกระทบจากการถูกตีตรา
@@ -430,7 +430,7 @@ export const questions: Question[] = [
       'ตั้งสติและติดต่อสายด่วน 1663 เพื่อรับการปรึกษา',
     ],
     correctIndex: 2,
-    knowledgeCard: { pdfId: '1Umo_cd_SNzb7JPR7kUy1C1T41GNDXaLx' },
+    knowledgeCard: { pdfId: 's15q1' },
   },
 
   // ส่วนที่ 16: การตระหนักถึงผลกระทบระยะยาว
@@ -447,7 +447,7 @@ export const questions: Question[] = [
       'ไม่มีข้อใดถูก',
     ],
     correctIndex: 0,
-    knowledgeCard: { pdfId: '1qhFWH-omOMX_DMacxf5rC3Vp-U1At2D0' },
+    knowledgeCard: { pdfId: 's16q1' },
   },
   {
     id: 's16q2',
@@ -462,7 +462,7 @@ export const questions: Question[] = [
       'ถูกทุกข้อ',
     ],
     correctIndex: 1,
-    knowledgeCard: { pdfId: '1YZKo4xywcaWFGXyebInYTKSPeIF_k12N' },
+    knowledgeCard: { pdfId: 's16q2' },
   },
 ];
 

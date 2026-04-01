@@ -21,12 +21,11 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
     setLoading(true)
     setError(false)
     const update = () => {
-      if (containerRef.current) {
-        setDims({
-          w: containerRef.current.clientWidth,
-          h: containerRef.current.clientHeight,
-        })
-      }
+      if (!containerRef.current) return
+      setDims({
+        w: containerRef.current.clientWidth,
+        h: containerRef.current.clientHeight,
+      })
     }
     update()
     const ro = new ResizeObserver(update)
@@ -34,16 +33,29 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
     return () => ro.disconnect()
   }, [pdfId])
 
-  // Use height to fill the container vertically — no scrolling.
-  // If container height isn't known yet, fall back to width.
-  const pageProps = dims.h > 0 ? { height: dims.h } : dims.w > 0 ? { width: dims.w } : {}
+  // Pick the constraint that keeps the PDF within BOTH width and height.
+  // Assume portrait PDF ratio ≈ 1 : 1.41 (A4-ish).
+  const pageProps = (() => {
+    if (!dims.w) return {}
+    if (!dims.h) return { width: dims.w }
+    // If constrained by width, would the height overflow?
+    const heightAtWidth = dims.w * 1.41
+    if (heightAtWidth <= dims.h) {
+      return { width: dims.w }          // fits — use full width
+    }
+    // Otherwise constrain by height; PDF will be narrower than container
+    return { height: dims.h }
+  })()
 
   return (
-    <div ref={containerRef} className="w-full h-full overflow-hidden bg-gray-100 relative flex items-center justify-center">
+    <div
+      ref={containerRef}
+      className="w-full h-full overflow-hidden bg-white flex items-center justify-center relative"
+    >
       {loading && !error && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 z-10">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-10">
           <div className="w-10 h-10 border-4 border-pink-300 border-t-pink-500 rounded-full animate-spin mb-3" />
-          <p className="text-gray-500 text-sm">กำลังโหลดการ์ดความรู้…</p>
+          <p className="text-gray-400 text-sm">กำลังโหลดการ์ดความรู้…</p>
         </div>
       )}
       {error && (
@@ -52,7 +64,7 @@ export default function KnowledgePdf({ pdfId }: KnowledgePdfProps) {
           <p className="text-gray-500 text-sm">ไม่สามารถโหลดการ์ดได้</p>
         </div>
       )}
-      {dims.h > 0 && (
+      {dims.w > 0 && (
         <Document
           file={`/api/pdf/${pdfId}`}
           onLoadSuccess={() => setLoading(false)}

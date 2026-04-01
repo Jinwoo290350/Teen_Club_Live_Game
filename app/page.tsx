@@ -1073,7 +1073,6 @@ export default function TeenClubQuiz() {
                               ratings: { ...prev.ratings, [key]: level },
                             }))
                           }
-                          disabled={selectedValue !== undefined && selectedValue !== level}
                         />
                       ))}
                     </div>
@@ -1106,7 +1105,6 @@ export default function TeenClubQuiz() {
                               ratings: { ...prev.ratings, [key]: level },
                             }))
                           }
-                          disabled={selectedValue !== undefined && selectedValue !== level}
                         />
                       ))}
                     </div>
@@ -1139,7 +1137,6 @@ export default function TeenClubQuiz() {
                               ratings: { ...prev.ratings, [key]: level },
                             }))
                           }
-                          disabled={selectedValue !== undefined && selectedValue !== level}
                         />
                       ))}
                     </div>

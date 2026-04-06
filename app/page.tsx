@@ -434,13 +434,28 @@ export default function TeenClubQuiz() {
   const nextQuestion = () => {
     if (game.currentQuestion >= questions.length - 1) {
       playResultFanfare();
-      const finalAnswers = game.answers.map((a) => a ?? -1);
-      const finalScore = game.answers.filter((a, i) => a === questions[i].correctIndex).length;
+      // 1/0 per question
+      const correctness = questions.map((q, i) =>
+        (game.answers[i] ?? -1) === q.correctIndex ? 1 : 0
+      );
+      // 1/0 per section (ส่วน 2–16): 1 = ถูกทุกข้อในส่วน, 0 = มีผิด
+      const sectionResults = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].map((sec) => {
+        const idxs = questions.map((q, i) => q.section === sec ? i : -1).filter(i => i >= 0);
+        return idxs.every(i => correctness[i] === 1) ? 1 : 0;
+      });
+      // 1/0 per category (หมวด 1–3)
+      const categoryResults = [1, 2, 3].map((cat) => {
+        const idxs = questions.map((q, i) => q.category === cat ? i : -1).filter(i => i >= 0);
+        return idxs.every(i => correctness[i] === 1) ? 1 : 0;
+      });
+      const finalScore = correctness.reduce((s, v) => s + v, 0);
       submitQuizResponse({
         gender: genderLabel[player.gender ?? ''] ?? '',
         ageGroup: ageLabel[player.ageGroup ?? ''] ?? '',
         education: player.education,
-        answers: finalAnswers,
+        answers: correctness,
+        sectionResults,
+        categoryResults,
         score: finalScore,
         totalQuestions: questions.length,
       });

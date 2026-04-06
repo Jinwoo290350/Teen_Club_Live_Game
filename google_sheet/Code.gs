@@ -27,9 +27,15 @@ function doPost(e) {
 }
 
 // ── Sheet 1: responses ──────────────────────────────────────
-// A: timestamp | B: gender | C: ageGroup | D: education
-// E–AD: s2q1 … s16q2  (26 คอลัมน์ เก็บ index ที่ผู้เล่นเลือก)
-// AE: score | AF: totalQuestions
+// A:  timestamp
+// B:  gender
+// C:  ageGroup
+// D:  education
+// E–AD:  s2q1 … s16q2  (26 คอลัมน์, 1 = ถูก / 0 = ผิด)
+// AE–AS: sec2 … sec16  (15 คอลัมน์, 1 = ถูกทุกข้อในส่วน / 0 = มีผิด)
+// AT–AV: cat1, cat2, cat3 (3 คอลัมน์, 1 = ถูกทุกข้อในหมวด / 0 = มีผิด)
+// AW: score (จำนวนข้อที่ถูก)
+// AX: totalQuestions (26)
 function writeQuizResponse(ss, data) {
   var sheet = ss.getSheetByName(RESPONSES_SHEET);
   if (!sheet) sheet = ss.insertSheet(RESPONSES_SHEET);
@@ -37,6 +43,8 @@ function writeQuizResponse(ss, data) {
   // สร้าง header ถ้า sheet ว่าง
   if (sheet.getLastRow() === 0) {
     var headers = ['timestamp', 'gender', 'ageGroup', 'education'];
+
+    // 26 ข้อ
     var questionIds = [
       's2q1','s2q2',
       's3q1','s3q2',
@@ -54,7 +62,20 @@ function writeQuizResponse(ss, data) {
       's15q1',
       's16q1','s16q2'
     ];
-    headers = headers.concat(questionIds).concat(['score', 'totalQuestions']);
+
+    // 15 ส่วน
+    var sectionIds = ['sec2','sec3','sec4','sec5','sec6','sec7','sec8',
+                      'sec9','sec10','sec11','sec12','sec13','sec14','sec15','sec16'];
+
+    // 3 หมวด
+    var categoryIds = ['cat1','cat2','cat3'];
+
+    headers = headers
+      .concat(questionIds)
+      .concat(sectionIds)
+      .concat(categoryIds)
+      .concat(['score', 'totalQuestions']);
+
     sheet.appendRow(headers);
     sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');
     sheet.setFrozenRows(1);
@@ -66,7 +87,10 @@ function writeQuizResponse(ss, data) {
     data.ageGroup || '',
     data.education || ''
   ];
-  row = row.concat(data.answers || []);
+  row = row
+    .concat(data.answers || [])          // 26 ค่า 1/0
+    .concat(data.sectionResults || [])   // 15 ค่า 1/0
+    .concat(data.categoryResults || []); // 3 ค่า 1/0
   row.push(data.score || 0);
   row.push(data.totalQuestions || 26);
 

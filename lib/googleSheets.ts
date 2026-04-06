@@ -4,7 +4,9 @@ export async function submitQuizResponse(payload: {
   gender: string
   ageGroup: string
   education: string
-  answers: number[]
+  answers: number[]        // 26 ค่า: 1 = ถูก, 0 = ผิด
+  sectionResults: number[] // 15 ค่า: 1 = ถูกทุกข้อในส่วน, 0 = มีผิด (ส่วน 2–16)
+  categoryResults: number[] // 3 ค่า: 1 = ถูกทุกข้อในหมวด, 0 = มีผิด (หมวด 1–3)
   score: number
   totalQuestions: number
 }) {

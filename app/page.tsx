@@ -568,6 +568,14 @@ export default function TeenClubQuiz() {
 
   return (
     <main className="min-h-screen gradient-mesh">
+      {/* Logo — fixed top-left, shown on all screens except inside modal */}
+      {screen !== 'quiz' || !game.showingKnowledge ? (
+        <div className="fixed top-3 left-3 z-30 pointer-events-none">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo_teenclub.jpeg" alt="Teen Club" className="h-10 sm:h-12 w-auto rounded-lg shadow-md opacity-90" />
+        </div>
+      ) : null}
+
       {showConfetti && <Confetti />}
 
       {/* Combo text overlay */}

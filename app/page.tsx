@@ -438,10 +438,10 @@ export default function TeenClubQuiz() {
       const correctness = questions.map((q, i) =>
         (game.answers[i] ?? -1) === q.correctIndex ? 1 : 0
       );
-      // 1/0 per section (ส่วน 2–16): 1 = ถูกทุกข้อในส่วน, 0 = มีผิด
+      // จำนวนข้อถูกรายส่วน (ส่วน 2–16)
       const sectionResults = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].map((sec) => {
         const idxs = questions.map((q, i) => q.section === sec ? i : -1).filter(i => i >= 0);
-        return idxs.every(i => correctness[i] === 1) ? 1 : 0;
+        return idxs.reduce((sum, i) => sum + correctness[i], 0);
       });
       // 1/0 per category (หมวด 1–3)
       const categoryResults = [1, 2, 3].map((cat) => {

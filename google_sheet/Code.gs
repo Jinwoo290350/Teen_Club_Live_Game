@@ -32,7 +32,7 @@ function doPost(e) {
 // C:  ageGroup
 // D:  education
 // E–AD:  s2q1 … s16q2  (26 คอลัมน์, 1 = ถูก / 0 = ผิด)
-// AE–AS: sec2 … sec16  (15 คอลัมน์, 1 = ถูกทุกข้อในส่วน / 0 = มีผิด)
+// AE–AS: sec2 … sec16  (15 คอลัมน์, จำนวนข้อถูกในส่วน)
 // AT–AV: cat1, cat2, cat3 (3 คอลัมน์, 1 = ถูกทุกข้อในหมวด / 0 = มีผิด)
 // AW: score (จำนวนข้อที่ถูก)
 // AX: totalQuestions (26)

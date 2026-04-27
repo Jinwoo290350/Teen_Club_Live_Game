@@ -572,7 +572,7 @@ export default function TeenClubQuiz() {
       {screen !== 'quiz' || !game.showingKnowledge ? (
         <div className="fixed top-3 left-3 z-30 pointer-events-none">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo_teenclub.jpeg" alt="Teen Club" className="h-10 sm:h-12 w-auto rounded-lg shadow-md opacity-90" />
+          <img src="/logo_teenclub.png" alt="Teen Club" className="h-10 sm:h-12 w-auto drop-shadow-md" />
         </div>
       ) : null}
 
